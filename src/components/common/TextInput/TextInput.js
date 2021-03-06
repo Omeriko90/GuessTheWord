@@ -3,14 +3,12 @@ import PropTypes from "prop-types";
 import {
   BaseTextInput,
   ErrorMsgContainer,
-  IconContainer,
   InputContainer,
   TextIconGroup,
   InputComponentAndError,
 } from "./style";
 import { SIZE, TEXT_INPUT_TYPE } from "constant";
 import Text from "components/common/Text";
-import Icon from "components/common/Icon";
 
 TextInput.propTypes = {
   placeholder: PropTypes.string,
@@ -19,34 +17,28 @@ TextInput.propTypes = {
   disabled: PropTypes.bool,
   errorMsg: PropTypes.string,
   width: PropTypes.string,
-  onClickIcon: PropTypes.func,
   onChange: PropTypes.func,
   onKeyUp: PropTypes.func,
   onKeyDown: PropTypes.func,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
-  iconName: PropTypes.string,
   lineHeight: PropTypes.bool,
   value: PropTypes.string,
   autoFocus: PropTypes.bool,
   withBorder: PropTypes.bool,
   type: PropTypes.oneOf(Object.values(TEXT_INPUT_TYPE)),
-  id: PropTypes.string,
   name: PropTypes.string,
-  spellcheck: PropTypes.bool,
 };
 
 TextInput.defaultProps = {
   value: "",
   disabled: false,
   rounded: false,
-  iconName: null,
   lineHeight: true,
   autoFocus: false,
   size: SIZE.small,
   withBorder: true,
   type: TEXT_INPUT_TYPE.text,
-  spellcheck: true,
 };
 
 function TextInput(props) {
@@ -61,16 +53,10 @@ function TextInput(props) {
   let placeholderColor = "#a6a8ab";
   let borderColor,
     backgroundColor,
-    iconName,
-    iconColor,
     focusStyle,
-    paddingBlock,
     lineHeight,
     fontSize,
     paddingStyle,
-    iconSize,
-    iconPadding,
-    paddingInline,
     paddingInlineStart;
 
   useEffect(() => {
@@ -79,62 +65,32 @@ function TextInput(props) {
     }
   }, [baseInput.current, props.autoFocus]);
 
-  if (props.iconName) {
-    iconName = props.iconName;
-  }
-
-  if (props.disabled) {
-    iconName = "lock-empty";
-  }
-
   switch (props.size) {
     case SIZE.small:
       fontSize = FONT_SIZE.small;
       lineHeight = LINE_HEIGHT.small;
-      paddingInline = PADDING_INLINE.small;
-      iconPadding = ICON_PADDING_INLINE_START.small;
-      iconSize = SIZE.xs;
-      paddingBlock = PADDING_BLOCK.small;
+      paddingStyle = "4px";
       break;
     case SIZE.medium:
       fontSize = FONT_SIZE.medium;
       lineHeight = LINE_HEIGHT.medium;
-      paddingInline = PADDING_INLINE.medium;
-      iconPadding = ICON_PADDING_INLINE_START.medium;
-      iconSize = SIZE.small;
-      paddingBlock = PADDING_BLOCK.medium;
+      paddingStyle = "8px";
       break;
     case SIZE.large:
       fontSize = FONT_SIZE.large;
       lineHeight = LINE_HEIGHT.large;
-      paddingInline = PADDING_INLINE.large;
-      iconPadding = ICON_PADDING_INLINE_START.large;
-      iconSize = SIZE.large;
-      paddingBlock = PADDING_BLOCK.large;
+      paddingStyle = "12px";
       break;
     case SIZE.xl:
       fontSize = FONT_SIZE.xl;
-      paddingInline = PADDING_INLINE.xl;
       lineHeight = LINE_HEIGHT.xl;
-      iconSize = SIZE.xl;
-      iconPadding = ICON_PADDING_INLINE_START.xl;
-      paddingBlock = PADDING_BLOCK.xl;
+      paddingStyle = "14px";
       break;
     default:
       fontSize = FONT_SIZE.small;
       lineHeight = LINE_HEIGHT.small;
-      paddingInline = PADDING_INLINE.small;
-      iconPadding = ICON_PADDING_INLINE_START.small;
-      iconSize = SIZE.xs;
-      paddingBlock = PADDING_BLOCK.small;
       break;
   }
-
-  const handleIconClick = () => {
-    if (props.onClickIcon) {
-      props.onClickIcon(baseInput.current);
-    }
-  };
 
   const handleChange = (e) => {
     if (props.onChange) {
@@ -203,18 +159,7 @@ function TextInput(props) {
             value={props.value || ""}
             textAlign={textAlign}
             type={props.type}
-            id={props.id}
           ></BaseTextInput>
-          {iconName && (
-            <IconContainer paddingInlineStart={iconPadding}>
-              <Icon
-                name={iconName}
-                onClick={props.onClickIcon && handleIconClick}
-                size={iconSize}
-                color={iconColor}
-              ></Icon>
-            </IconContainer>
-          )}
         </TextIconGroup>
         {props.errorMsg && !props.disabled ? (
           <ErrorMsgContainer>
@@ -238,14 +183,6 @@ const LINE_HEIGHT = {
   large: "24px",
   xl: "24px",
 };
-const ICON_PADDING_INLINE_START = { small: "8px", large: "12px", xl: "16px" };
-const PADDING_INLINE = {
-  small: "7px",
-  medium: "7px",
-  large: "11px",
-  xl: "15px",
-};
-const PADDING_BLOCK = { small: "3px", medium: "5px", large: "7px", xl: "11px" };
 const TEXT_ALIGN = { ltr: "left", rtl: "right" };
 
 export default React.memo(TextInput);

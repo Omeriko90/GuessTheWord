@@ -10,9 +10,8 @@ const user = (state = {}, action) => {
 };
 
 function setUser(state, user) {
-  if (user.length > 0) {
-    state = user[0];
-  }
+  state = user;
+
   return { ...state };
 }
 

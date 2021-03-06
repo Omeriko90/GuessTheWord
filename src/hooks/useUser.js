@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser, selectProjects } from "store/selectors";
 import { SORT_TYPE } from "constant";
@@ -8,20 +8,23 @@ const useUser = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const projects = useSelector(selectProjects);
+  console.log(user);
+  const [isUserProjectsLoaded, setIsUserProjectsLoaded] = useState(false);
 
   useEffect(() => {
     if (user && user.token) {
       localStorage.setItem("user_token", user.token);
+      localStorage.setItem("user", JSON.stringify(user.personalDetails));
       dispatch(getUserProjects(user.token));
     }
   }, [user]);
 
   useEffect(() => {
-    debugger;
+    projects[0] && setIsUserProjectsLoaded(true);
   }, [projects]);
 
   const getUserDetails = () => {
-    return user;
+    return user?.personalDetails;
   };
 
   const getUserToken = () => {
@@ -30,49 +33,63 @@ const useUser = () => {
   };
 
   const getProjects = (sortType, sortColumn) => {
+    const column = sortColumn || "id";
     if (sortType === SORT_TYPE.asc) {
       return projects?.sort((projectA, projectB) =>
-        projectA[sortColumn] > projectB[sortColumn] ? 1 : -1
+        projectA[sortColumn] > projectB[column] ? 1 : -1
       );
     }
 
     return projects?.sort((projectA, projectB) =>
-      projectA[sortColumn] > projectB[sortColumn] ? -1 : 1
+      projectA[sortColumn] > projectB[column] ? -1 : 1
     );
   };
 
-  const getNumberOfSuccessfulProjects = () => {
-    return projects?.map((project) => project.madeDadeline).length;
+  const getNumberOfSuccessfulProjects = (projectsArr) => {
+    return projectsArr?.filter((project) => project.cells[5].value).length;
   };
 
-  const getNotOverDueProjectsPercent = () => {
-    const numberOfSuccessfulProjects = getNumberOfSuccessfulProjects();
-
-    return (numberOfSuccessfulProjects / projects?.length) * 100;
-  };
-
-  const getTotalProjectsScore = () => {
-    return projects?.reduce(
-      (projectA, projectB) =>
-        parseFloat(projectA.score) + parseFloat(projectB.score),
-      0
+  const getNotOverDueProjectsPercent = (projectsArr) => {
+    const numberOfSuccessfulProjects = getNumberOfSuccessfulProjects(
+      projectsArr
     );
+    return (numberOfSuccessfulProjects / projectsArr?.length) * 100;
   };
 
-  const getAverageProjectsScore = () => {
-    const numberOfSuccessfulProjects = getTotalProjectsScore();
+  const getTotalProjectsScore = (projectsArr) => {
+    let score = 0;
+    projectsArr.forEach((project) => {
+      score += project.cells[2].value;
+    });
+
+    return score;
+  };
+
+  const getAverageProjectsScore = (projectsArr) => {
+    const numberOfSuccessfulProjects = getTotalProjectsScore(projectsArr);
 
     return numberOfSuccessfulProjects / projects?.length;
+  };
+
+  const getProjectsColumn = () => {
+    const columns = Object.keys(projects[0]).map((key) => {
+      return {
+        Header: key,
+        accessor: key,
+        sortType: "basic",
+      };
+    });
+    return [{ Header: "Projects", columns }];
   };
 
   return {
     getUserDetails,
     getUserToken,
     getProjects,
-    getNotOverDueProjectsPrecent: getNotOverDueProjectsPercent,
+    getNotOverDueProjectsPercent,
     getAverageProjectsScore,
-    user,
-    projects,
+    getProjectsColumn,
+    isUserProjectsLoaded,
   };
 };
 

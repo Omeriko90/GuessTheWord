@@ -1,20 +1,27 @@
+import axios from "axios";
 import { REDUCER_LABEL as Labels } from "constant";
 
 const header = { berear: "" };
 
 export function logIn(username, password) {
-  return apiAction({
-    url: `https://private-052d6-testapi4528.apiary-mock.com/authenticate`,
-    method: "POST",
-    data: { username, password },
-    onSuccess: function (user) {
-      return {
-        type: Labels.setUser,
-        payload: user,
-      };
-    },
-    onFailure: apiErr,
+  const url = "https://private-052d6-testapi4528.apiary-mock.com/authenticate";
+  return new Promise((resolve, reject) => {
+    axios
+      .post(url, { username, password })
+      .then((response) => {
+        resolve(response.data[0]);
+      })
+      .catch((error) => {
+        apiErr(error);
+      });
   });
+}
+
+export function setUser(user) {
+  return {
+    type: Labels.setUser,
+    payload: user,
+  };
 }
 
 export function getUserProjects(userToken) {

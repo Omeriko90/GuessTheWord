@@ -69,7 +69,7 @@ function Icon(props) {
 
   return (
     <BaseIcon
-      className={"icon icon-" + props.name}
+      className={"icon-" + props.name}
       fontSize={fontSize}
       color={props.color}
       cursor={props.onClick ? "pointer" : "inherit"}

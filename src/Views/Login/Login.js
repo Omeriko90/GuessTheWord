@@ -9,6 +9,8 @@ import {
   ButtonContainer,
   Content,
   ErrorContainer,
+  BackgroundContainer,
+  LogInContainer,
 } from "./style";
 import Text from "components/common/Text";
 import TextInput from "components/common/TextInput";
@@ -23,12 +25,16 @@ import {
 import { TEXT_INPUT_TYPE } from "constant";
 import { useDispatch } from "react-redux";
 import Button from "components/common/Button";
-import { logIn } from "store/actions";
+import { logIn, setUser } from "store/actions";
 import { useHistory } from "react-router";
+import Spinner from "components/common/Spinner";
 
 function Login(props) {
   const dispatch = useDispatch();
   const history = useHistory();
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [isUsernameValid, setIsUsernameValid] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [usernameErr, setUsernameErr] = useState("");
@@ -41,19 +47,21 @@ function Login(props) {
     isValid =
       isValid && EMAIL_ADDRESS_REGEX.test(String(username).toLowerCase());
     !isValid && setUsernameErr("Invalid Username");
+    isValid && setUsernameErr("");
+    setIsUsernameValid(isValid);
 
     return isValid;
   };
 
   const isValidPasswordLength = () => {
     const isValid = password.length >= VALID_PASSWORD_LENGTH;
-    isValid && setPasswordErr("Password must be at least 8 characters long");
+    !isValid && setPasswordErr("Password must be at least 8 characters long");
     return password.length >= VALID_PASSWORD_LENGTH;
   };
 
   const hasAtLeastOneCapitalLetter = () => {
     const isValid = PASSWORD_LETTER_VALIDATION.test(password);
-    isValid &&
+    !isValid &&
       setPasswordErr((prevState) =>
         prevState.length > 0
           ? `${prevState} \n\r Password must contain at least one capital letter`
@@ -64,7 +72,7 @@ function Login(props) {
 
   const hasAtLeastOneNumber = () => {
     const isValid = PASSWORD_NUMBER_VALIDATION.test(password);
-    isValid &&
+    !isValid &&
       setPasswordErr((prevState) =>
         prevState.length > 0
           ? `${prevState} \n\r Password must contain at least one number`
@@ -77,11 +85,9 @@ function Login(props) {
     let isValid = isValidPasswordLength();
     isValid = isValid && hasAtLeastOneCapitalLetter();
     isValid = isValid && hasAtLeastOneNumber();
-
+    isValid && setPasswordErr("");
+    setIsPasswordValid(isValid);
     return isValid;
-  };
-  const validateCredentials = () => {
-    return validateUsername() && validatePassword();
   };
 
   const handleUsernameChange = (value) => {
@@ -92,17 +98,16 @@ function Login(props) {
     setPassword(value);
   };
 
-  const handleSubmit = () => {
-    const isValid = validateCredentials();
-
-    if (isValid) {
-      dispatch(logIn(username, password));
-      history.push("/userdetails");
-    }
+  const handleSubmit = async () => {
+    setShowSpinner(true);
+    const user = await logIn(username, password);
+    dispatch(setUser(user));
+    history.push("/userPage");
   };
   return (
     <Container>
-      <Card height={"500px"}>
+      <BackgroundContainer />
+      <LogInContainer>
         <HeaderContainer>
           <Text size={SIZE.xxl}>Welcome To Omer App</Text>
         </HeaderContainer>
@@ -116,6 +121,8 @@ function Login(props) {
                 type={TEXT_INPUT_TYPE.email}
                 value={username}
                 onChange={handleUsernameChange}
+                onBlur={validateUsername}
+                placeholder={"Username"}
               />
               {shouldShowUsernameErr && (
                 <ErrorContainer>
@@ -133,6 +140,8 @@ function Login(props) {
                 type={TEXT_INPUT_TYPE.password}
                 value={password}
                 onChange={handlePasswordChange}
+                onBlur={validatePassword}
+                placeholder={"Password"}
               />
               {shouldShowPasswordErr && (
                 <ErrorContainer>
@@ -144,18 +153,23 @@ function Login(props) {
             </InputContainer>
           </InputsContainer>
           <ButtonContainer>
-            <Button
-              iconName={"spin"}
-              size={SIZE.large}
-              color={COLOR.primary}
-              width={"100%"}
-              text={"Log In"}
-              rounded
-              onClick={handleSubmit}
-            />
+            {!showSpinner ? (
+              <Button
+                iconName={"spin"}
+                size={SIZE.xl}
+                color={COLOR.primary}
+                disabled={!(isUsernameValid && isPasswordValid)}
+                width={"100%"}
+                text={"Log In"}
+                rounded
+                onClick={handleSubmit}
+              />
+            ) : (
+              <Spinner isLoading />
+            )}
           </ButtonContainer>
         </Content>
-      </Card>
+      </LogInContainer>
     </Container>
   );
 }

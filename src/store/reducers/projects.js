@@ -1,7 +1,6 @@
 import { REDUCER_LABEL as Labels } from "constant";
 
 const projects = (state = [], action) => {
-  debugger;
   switch (action.type) {
     case Labels.setProject:
       return setProjects(state, action.payload);
@@ -12,7 +11,7 @@ const projects = (state = [], action) => {
 
 function setProjects(state, projects) {
   state = projects;
-  return { ...state };
+  return [...state];
 }
 
 export default projects;

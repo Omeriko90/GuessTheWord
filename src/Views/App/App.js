@@ -3,14 +3,14 @@ import "./App.css";
 import { Switch, Route } from "react-router-dom";
 import Login from "Views/Login";
 import { Body } from "./style";
-import UserDetails from "Views/UserDetails";
+import UserPage from "Views/UserPage";
 
 function App() {
   return (
     <Body>
       <Switch>
         <Route exact path="/" component={Login} />
-        <Route exact path="/userdetails" component={UserDetails} />
+        <Route exact path="/userPage" component={UserPage} />
       </Switch>
     </Body>
   );

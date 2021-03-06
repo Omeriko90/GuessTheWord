@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const BaseTextInput = styled.input`
   font-size: ${(props) => props.fontSize};
   font-family: arimo, arial;
-  background-color: #fff !important;
+  background-color: transparent !important;
   border: none;
   color: ${(props) => props.textColor};
   ${(props) => (props.maxWidth ? `max-width: ${props.maxWidth}` : ``)};
@@ -11,6 +11,7 @@ export const BaseTextInput = styled.input`
   ${(props) => (props.textAlign ? `text-align:${props.textAlign}` : "")};
   width: 100%;
   padding: 0;
+  outline-width: 0;
 `;
 
 export const InputContainer = styled.div`
