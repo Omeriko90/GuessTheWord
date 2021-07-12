@@ -40,7 +40,20 @@ export const SORT_TYPE = {
   desc: "DESC",
 };
 
-export const EMAIL_ADDRESS_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+export const DEVICE_MAX_SIZE = {
+  small: 767,
+  medium: 1023,
+  large: 9999999,
+};
+
+export const DEVICE = {
+  small: `(max-width: ${DEVICE_MAX_SIZE.small}px)`,
+  medium: `(min-width: ${DEVICE_MAX_SIZE.small}px) and (max-width: ${DEVICE_MAX_SIZE.medium}px)`,
+  large: `(min-width: ${DEVICE_MAX_SIZE.medium + 1}px)`,
+};
+
+export const EMAIL_ADDRESS_REGEX =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 export const PASSWORD_LETTER_VALIDATION = /(?=.*[A-Z])/;
 export const PASSWORD_NUMBER_VALIDATION = /[0-9]/;
 export const VALID_PASSWORD_LENGTH = 8;

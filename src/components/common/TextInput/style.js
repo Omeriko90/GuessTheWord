@@ -15,7 +15,7 @@ export const BaseTextInput = styled.input`
 `;
 
 export const InputContainer = styled.div`
-  ${(props) => (props.width ? `width:${props.width};` : "width: 100%")}
+  ${(props) => (props.width ? `width:${props.width};` : "width: 100%;")}
   cursor: ${(props) => props.cursor};
   user-select: ${(props) => props.userSelect};
   pointer-events: ${(props) => props.pointerEvents};

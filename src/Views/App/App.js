@@ -1,18 +1,31 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
-import Login from "Views/Login";
-import { Body } from "./style";
-import UserPage from "Views/UserPage";
+import * as S from "./style";
+import WelcomePage from "Views/WelcomePage";
+import { LabelsContext, ThemeContext } from "helpers/context";
+import { eng } from "languages";
+import Game from "Views/Game";
+import Theme from "components/style/themes";
+import GameOver from "Views/GameOver";
 
 function App() {
+  const labels = eng();
+
   return (
-    <Body>
-      <Switch>
-        <Route exact path="/" component={Login} />
-        <Route exact path="/userPage" component={UserPage} />
-      </Switch>
-    </Body>
+    <ThemeContext.Provider value={Theme}>
+      <LabelsContext.Provider value={labels}>
+        <S.Body>
+          <S.ColorBackground>
+            <Switch>
+              <Route exact path="/gameover" component={GameOver} />
+              <Route exact path="/game" component={Game} />
+              <Route exact path="/" component={WelcomePage} />
+            </Switch>
+          </S.ColorBackground>
+        </S.Body>
+      </LabelsContext.Provider>
+    </ThemeContext.Provider>
   );
 }
 

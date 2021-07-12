@@ -2,13 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import {
   BaseTextInput,
-  ErrorMsgContainer,
   InputContainer,
   TextIconGroup,
   InputComponentAndError,
 } from "./style";
 import { SIZE, TEXT_INPUT_TYPE } from "constant";
-import Text from "components/common/Text";
 
 TextInput.propTypes = {
   placeholder: PropTypes.string,
@@ -161,15 +159,6 @@ function TextInput(props) {
             type={props.type}
           ></BaseTextInput>
         </TextIconGroup>
-        {props.errorMsg && !props.disabled ? (
-          <ErrorMsgContainer>
-            <Text size={SIZE.xxs} color={"#FA6D6D"}>
-              {props.errorMsg}
-            </Text>
-          </ErrorMsgContainer>
-        ) : (
-          <></>
-        )}
       </InputComponentAndError>
     </InputContainer>
   );

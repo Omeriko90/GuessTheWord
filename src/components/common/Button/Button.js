@@ -104,7 +104,9 @@ function Button(props) {
       cursor={cursor}
       borderRadius={borderRadius}
       paddingBlock={paddingBlock}
-      baseStyle={stateStyle}
+      defaultStyle={stateStyle.default}
+      hoverStyle={stateStyle.hover}
+      activeStyle={stateStyle.active}
       paddingInLine={paddingInLine}
       fontSize={fontSize}
       lineHeight={`${lineHeight}px`}

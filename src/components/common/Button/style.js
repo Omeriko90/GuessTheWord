@@ -14,10 +14,10 @@ export const BaseButton = styled.button`
   line-height: ${(props) => props.lineHeight};
   font-family: arimo, arial;
   border: 1px solid;
-  ${(props) => props.baseStyle};
+  ${(props) => props.defaultStyle};
   cursor: ${(props) => props.cursor};
   outline: none;
-  ${(props) => props.baseStyle};
+
   &:hover {
     ${(props) => props.hoverStyle}
   }

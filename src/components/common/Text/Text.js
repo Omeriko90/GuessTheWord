@@ -65,11 +65,11 @@ function Text(props) {
       lineHeight = 24;
       break;
     case SIZE.xl:
-      fontSize = 24;
+      fontSize = 34;
       lineHeight = 24;
       break;
     case SIZE.xxl:
-      fontSize = 28;
+      fontSize = 42;
       lineHeight = 24;
       break;
     default:
