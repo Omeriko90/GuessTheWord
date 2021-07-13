@@ -8,9 +8,10 @@ If you guess wrong you lose a life point. Don't worry you 3 lives before it's ga
 ## Tech
 
 Client:
-*React
-*wordApi
-\*axios
+
+- React
+- wordApi
+- axios
 
 side note: Because the word api doesn't give easy words sometimes I left console.log with the current word so you can check the application fully
 
