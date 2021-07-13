@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectScore } from "store/selectors";
 import { addScoreToScoreBoard } from "store/actions";
 import { useHistory } from "react-router-dom";
+import { isMobile } from "constant";
 
 function GameOver(props) {
   const dispatch = useDispatch();
@@ -20,7 +21,10 @@ function GameOver(props) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [nameErr, setNameErr] = useState("");
   const [phoneNumberErr, setPhoneNumberErr] = useState("");
+  const [hasFormSubmitted, setHasFormSubmitted] = useState(false);
+  const isMobileMode = isMobile();
   const scoreText = `${gameOver.yourScore}: ${score}`;
+  const buttonsSize = isMobileMode ? Constant.SIZE.xl : Constant.SIZE.large;
 
   const resetNameErr = () => {
     setNameErr("");
@@ -55,6 +59,7 @@ function GameOver(props) {
     ) {
       dispatch(addScoreToScoreBoard({ name, phoneNumber, score }));
       resetInputsError();
+      setHasFormSubmitted(true);
     } else {
       if (name.length < 2) {
         setNameErr(gameOver.nameErr);
@@ -88,56 +93,65 @@ function GameOver(props) {
         </Text>
         <Text size={Constant.SIZE.large}>{scoreText}</Text>
       </S.HeadlineContainer>
-      <S.FormContainer>
-        <S.InputsContainer>
-          <S.InputContainer>
-            <TextInput
-              placeholder={gameOver.name}
-              value={name}
-              onChange={handleNameChange}
-              rounded
-              errorMsg={nameErr}
-              size={Constant.SIZE.large}
-            />
-          </S.InputContainer>
-          <S.InputContainer>
-            <TextInput
-              placeholder={gameOver.phoneNumber}
-              value={phoneNumber}
-              onChange={handlePhoneNumberChange}
-              rounded
-              errorMsg={phoneNumberErr}
-              size={Constant.SIZE.large}
-            />
-          </S.InputContainer>
-        </S.InputsContainer>
-        <S.ButtonsContainer>
-          <S.ButtonContainer>
-            <Button
-              text={gameOver.submitButton}
-              color={Constant.COLOR.primary}
-              rounded
-              onClick={handleSubmitScore}
-            />
-          </S.ButtonContainer>
-          <S.ButtonContainer>
-            <Button
-              text={gameOver.newGame}
-              color={Constant.COLOR.primary}
-              rounded
-              onClick={handleNewGameClick}
-            />
-          </S.ButtonContainer>
-          <S.ButtonContainer>
-            <Button
-              text={gameOver.backToHome}
-              color={Constant.COLOR.primary}
-              rounded
-              onClick={handleBackToHomePageClick}
-            />
-          </S.ButtonContainer>
-        </S.ButtonsContainer>
-      </S.FormContainer>
+      {!hasFormSubmitted ? (
+        <S.FormContainer>
+          <S.InputsContainer>
+            <S.InputContainer>
+              <TextInput
+                placeholder={gameOver.name}
+                value={name}
+                onChange={handleNameChange}
+                rounded
+                errorMsg={nameErr}
+                size={Constant.SIZE.large}
+              />
+            </S.InputContainer>
+            <S.InputContainer>
+              <TextInput
+                placeholder={gameOver.phoneNumber}
+                value={phoneNumber}
+                onChange={handlePhoneNumberChange}
+                rounded
+                errorMsg={phoneNumberErr}
+                size={Constant.SIZE.large}
+              />
+            </S.InputContainer>
+          </S.InputsContainer>
+          <S.ButtonsContainer>
+            <S.ButtonContainer>
+              <Button
+                text={gameOver.submitButton}
+                color={Constant.COLOR.primary}
+                rounded
+                onClick={handleSubmitScore}
+                size={buttonsSize}
+              />
+            </S.ButtonContainer>
+            <S.ButtonContainer>
+              <Button
+                text={gameOver.newGame}
+                color={Constant.COLOR.primary}
+                rounded
+                onClick={handleNewGameClick}
+                size={buttonsSize}
+              />
+            </S.ButtonContainer>
+            <S.ButtonContainer>
+              <Button
+                text={gameOver.backToHome}
+                color={Constant.COLOR.primary}
+                rounded
+                onClick={handleBackToHomePageClick}
+                size={buttonsSize}
+              />
+            </S.ButtonContainer>
+          </S.ButtonsContainer>
+        </S.FormContainer>
+      ) : (
+        <S.FormSubmittedMessageWrapper>
+          <Text size={Constant.SIZE.xl}>{gameOver.formSubmitted}</Text>
+        </S.FormSubmittedMessageWrapper>
+      )}
       <S.ScoreBoardContainer>
         <S.ScoreBoardHeadlineContainer>
           <Text size={Constant.SIZE.large} bold>

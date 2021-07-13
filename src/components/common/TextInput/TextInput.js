@@ -1,12 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import PropTypes from "prop-types";
-import {
-  BaseTextInput,
-  InputContainer,
-  TextIconGroup,
-  ErrorMsgContainer,
-  InputComponentAndError,
-} from "./style";
+import * as S from "./style";
 import * as Constant from "constant";
 import Text from "../Text/Text";
 import { ThemeContext } from "helpers/context";
@@ -134,9 +128,9 @@ function TextInput(props) {
   };
 
   return (
-    <InputContainer width={props.width}>
-      <InputComponentAndError>
-        <TextIconGroup
+    <S.InputContainer width={props.width}>
+      <S.InputComponentAndError>
+        <S.TextIconGroup
           withBorder={props.withBorder}
           padding={paddingStyle}
           paddingInlineStart={paddingInlineStart}
@@ -147,7 +141,7 @@ function TextInput(props) {
             isFocused && !props.errorMsg && !props.disabled && focusStyle
           }
         >
-          <BaseTextInput
+          <S.BaseTextInput
             fontSize={fontSize}
             ref={baseInput}
             onChange={handleChange}
@@ -166,19 +160,19 @@ function TextInput(props) {
             value={props.value || ""}
             textAlign={textAlign}
             type={props.type}
-          ></BaseTextInput>
-        </TextIconGroup>
+          ></S.BaseTextInput>
+        </S.TextIconGroup>
         {props.errorMsg && !props.disabled ? (
-          <ErrorMsgContainer>
+          <S.ErrorMsgContainer>
             <Text size={Constant.SIZE.xxs} color={colors.red.salmon}>
               {props.errorMsg}
             </Text>
-          </ErrorMsgContainer>
+          </S.ErrorMsgContainer>
         ) : (
           <></>
         )}
-      </InputComponentAndError>
-    </InputContainer>
+      </S.InputComponentAndError>
+    </S.InputContainer>
   );
 }
 

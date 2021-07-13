@@ -11,9 +11,11 @@ const eng = () => {
     game: {
       guessButton: "Guess",
       inputPlaceholder: "Enter Your Guess",
-      score: "Score:",
+      score: "Score",
+      level: "Level",
       inputErr: "You didn't enter any guess",
       wrongGuess: "Wrong guess. Please try again",
+      correctGuess: "Correct Answer!",
     },
     gameInstructions: {
       levels:
@@ -37,6 +39,7 @@ const eng = () => {
       nameErr: "Name has to be at least 2 chars",
       phoneNumberErr: "Phone Number is required",
       onlyNumbersErr: "Invalid phone number",
+      formSubmitted: "From Submitted Successfully!",
     },
     scoreBoard: {
       nameColumn: "Name",

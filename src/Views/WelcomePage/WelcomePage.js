@@ -7,12 +7,16 @@ import { LabelsContext } from "helpers/context";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getHighestScore } from "store/selectors/scoreBoard";
+import { isMobile } from "constant";
 
 function WelcomePage() {
   const { welcomePage } = useContext(LabelsContext);
   const history = useHistory();
   const highestScore = useSelector(getHighestScore);
-
+  const isMobileMode = isMobile();
+  const mainHeadlineTextSize = isMobileMode
+    ? Constant.SIZE.xl
+    : Constant.SIZE.xxl;
   const handleStartGameClick = () => {
     history.push("/game");
   };
@@ -21,7 +25,7 @@ function WelcomePage() {
     <S.WelcomePageContainer>
       <S.ContentContainer>
         <S.HeadlineContainer>
-          <Text size={Constant.SIZE.xxl} bold color={"white"}>
+          <Text size={mainHeadlineTextSize} bold color={"white"}>
             {welcomePage.headline}
           </Text>
         </S.HeadlineContainer>

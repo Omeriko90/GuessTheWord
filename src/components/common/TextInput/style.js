@@ -47,10 +47,14 @@ export const InputComponentAndError = styled.div`
   flex-direction: column;
   border: ${(props) => props.focusStyle};
   border-radius: 4px;
+  position: relative;
 `;
 
 export const ErrorMsgContainer = styled.div`
-  margin-top: 4px;
+  /* margin-top: 4px; */
+  position: absolute;
+  display: flex;
+  top: 55px;
 `;
 
 export const IconContainer = styled.div`

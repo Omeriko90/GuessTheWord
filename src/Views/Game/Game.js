@@ -6,18 +6,21 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import Text from "components/common/Text";
 import TextInput from "components/common/TextInput";
 import Button from "components/common/Button";
-import { LabelsContext } from "helpers/context";
+import { LabelsContext, ThemeContext } from "helpers/context";
 import GameInstructions from "components/features/GameInstructions/GameInstructions";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectScore, selectWord } from "store/selectors";
 import { addPointsToScore, getNewWord, resetScore } from "store/actions";
+import { isMobile } from "constant";
 
 function Game() {
   const history = useHistory();
   const dispatch = useDispatch();
+  const isMobileMode = isMobile();
   const { game } = useContext(LabelsContext);
-  const wordObject = { word: "right away" }; //useSelector(selectWord);
+  const { colors } = useContext(ThemeContext);
+  const wordObject = useSelector(selectWord);
   const score = useSelector(selectScore);
   const [lives, setLives] = useState(3);
   const [usersGuess, setUsersGuess] = useState("");
@@ -26,10 +29,17 @@ function Game() {
   const [difficulty, setDifficulty] = useState(1);
   const [isInstructionDialogOpen, setIsInstructionDialogOpen] = useState(true);
   const [inputErr, setInputErr] = useState("");
-
+  const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
+  const textInputSize = isMobileMode ? Constant.SIZE.large : Constant.SIZE.xl;
+  const guessButtonSize = isMobileMode ? Constant.SIZE.xl : Constant.SIZE.xxl;
+  const wordToGuessSize = isMobileMode ? Constant.SIZE.xl : Constant.SIZE.xxl;
+  const textSize = isMobileMode ? Constant.SIZE.large : Constant.SIZE.xl;
+  const heartIconSize = isMobileMode ? "lg" : "2x";
+  console.log(wordObject);
+  console.log(wordToGuess);
   useEffect(() => {
     if (!wordObject) {
-      // dispatch(getNewWord());
+      dispatch(getNewWord());
     }
     dispatch(resetScore());
   }, []);
@@ -38,8 +48,9 @@ function Game() {
     if (wordObject && !wordToGuess) {
       const wordToDisplay = getWordToDisplay();
       setWordToGuess(wordToDisplay);
+      setCorrectAnswers(false);
     }
-  }, [wordObject, wordToGuess]);
+  }, [wordObject]);
 
   const getLetter = (letter) => {
     if (letter !== " " && Math.random() > 0.5) {
@@ -93,12 +104,13 @@ function Game() {
     } else if (usersGuess.toLowerCase() === wordObject.word.toLowerCase()) {
       setWordToGuess("");
       setUsersGuess("");
+      setCorrectAnswers(true);
       setCorrectAnswers((prevState) => prevState + 1);
-      if (correctAnswers === 4 && difficulty < 5) {
+      if (correctAnswers > 1 && correctAnswers % 5 === 0 && difficulty < 5) {
         setDifficulty((prevDifficulty) => prevDifficulty + 1);
       }
       dispatch(addPointsToScore(difficulty));
-      // dispatch(getNewWord());
+      dispatch(getNewWord());
     } else {
       setInputErr(game.wrongGuess);
 
@@ -115,24 +127,38 @@ function Game() {
   ) : (
     <S.GameContainer>
       <S.GameStateContainer>
-        <S.ScoreContainer>
-          <Text size={Constant.SIZE.large}>{game.score}</Text>
-          <Text size={Constant.SIZE.large}>{score}</Text>
-        </S.ScoreContainer>
+        <S.StatsContainer>
+          <Text size={textSize}>{game.score}:</Text>
+          <Text size={textSize}>{score}</Text>
+        </S.StatsContainer>
+        <S.StatsContainer>
+          <Text size={textSize}>{game.level}:</Text>
+          <Text size={textSize}>{difficulty}</Text>
+        </S.StatsContainer>
         <S.LifePointsContainer>
-          <FontAwesomeIcon icon={faHeart} color={"#C44536"} size={"lg"} />
-          <Text size={Constant.SIZE.large}>{lives}</Text>
+          <FontAwesomeIcon
+            icon={faHeart}
+            color={colors.red.mojo}
+            size={heartIconSize}
+          />
+          <Text size={textSize}>{lives}</Text>
         </S.LifePointsContainer>
       </S.GameStateContainer>
       <S.WordContainer>
-        <Text size={Constant.SIZE.xl} bold>
-          {wordToGuess}
-        </Text>
+        {showCorrectAnswer ? (
+          <Text size={wordToGuessSize} bold>
+            {game.correctGuess}
+          </Text>
+        ) : (
+          <Text size={wordToGuessSize} bold>
+            {wordToGuess}
+          </Text>
+        )}
       </S.WordContainer>
       <S.GuessContainer>
         <S.InputContainer>
           <TextInput
-            size={Constant.SIZE.large}
+            size={textInputSize}
             placeholder={game.inputPlaceholder}
             onChange={handleInputChange}
             value={usersGuess}
@@ -144,7 +170,7 @@ function Game() {
           <Button
             color={Constant.COLOR.blue}
             text={game.guessButton}
-            size={Constant.SIZE.xl}
+            size={guessButtonSize}
             rounded
             onClick={handleGuessClick}
           />

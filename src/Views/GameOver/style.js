@@ -1,3 +1,4 @@
+import { DEVICE } from "constant";
 import styled from "styled-components";
 
 export const GameOverContainer = styled.div`
@@ -5,6 +6,11 @@ export const GameOverContainer = styled.div`
   flex-direction: column;
   width: 500px;
   align-items: center;
+
+  @media ${DEVICE.small} {
+    padding: 20px;
+    width: 100%;
+  }
 `;
 
 export const FormContainer = styled.div`
@@ -14,6 +20,10 @@ export const FormContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   margin-bottom: 70px;
+
+  @media ${DEVICE.small} {
+    margin-bottom: 30px;
+  }
 `;
 
 export const InputsContainer = styled.div`
@@ -26,16 +36,28 @@ export const InputsContainer = styled.div`
   & > :first-child {
     margin-bottom: 15px;
   }
+
+  @media ${DEVICE.small} {
+    margin-bottom: 25px;
+  }
 `;
 
 export const InputContainer = styled.div`
   display: flex;
   width: 100%;
   max-width: 300px;
+
+  @media ${DEVICE.small} {
+    max-width: initial;
+  }
 `;
 
 export const ButtonContainer = styled.div`
   display: flex;
+
+  @media ${DEVICE.small} {
+    width: 100%;
+  }
 `;
 
 export const ButtonsContainer = styled.div`
@@ -46,6 +68,13 @@ export const ButtonsContainer = styled.div`
   & > :not(:last-child) {
     margin-bottom: 15px;
   }
+
+  @media ${DEVICE.small} {
+    width: 100%;
+    & > :not(:last-child) {
+      margin-bottom: 20px;
+    }
+  }
 `;
 
 export const HeadlineContainer = styled.div`
@@ -55,6 +84,10 @@ export const HeadlineContainer = styled.div`
   margin-bottom: 50px;
   & > :first-child {
     margin-bottom: 15px;
+  }
+
+  @media ${DEVICE.small} {
+    margin-bottom: 25px;
   }
 `;
 
@@ -68,4 +101,16 @@ export const ScoreBoardContainer = styled.div`
 export const ScoreBoardHeadlineContainer = styled.div`
   display: flex;
   margin-bottom: 20px;
+
+  @media ${DEVICE.small} {
+    margin-bottom: 10px;
+  }
+`;
+
+export const FormSubmittedMessageWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 25px;
 `;

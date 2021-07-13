@@ -1,45 +1,42 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { BaseButton, IconContainer } from "./style";
-import { COLOR, SIZE } from "constant";
-import Icon from "components/common/Icon";
+import * as S from "./style";
+import * as Constant from "constant";
 
 Button.propTypes = {
   text: PropTypes.string.isRequired,
   color: PropTypes.oneOf([
-    COLOR.primary,
-    COLOR.secondary,
-    COLOR.danger,
-    COLOR.invert,
-    COLOR.light,
-    COLOR.white,
-    COLOR.blue,
-    COLOR.orange,
+    Constant.COLOR.primary,
+    Constant.COLOR.secondary,
+    Constant.COLOR.danger,
+    Constant.COLOR.invert,
+    Constant.COLOR.light,
+    Constant.COLOR.white,
+    Constant.COLOR.blue,
+    Constant.COLOR.orange,
   ]),
   size: PropTypes.oneOf([
-    SIZE.xs,
-    SIZE.small,
-    SIZE.medium,
-    SIZE.large,
-    SIZE.xl,
-    SIZE.xxl,
+    Constant.SIZE.xs,
+    Constant.SIZE.small,
+    Constant.SIZE.medium,
+    Constant.SIZE.large,
+    Constant.SIZE.xl,
+    Constant.SIZE.xxl,
   ]),
   rounded: PropTypes.bool,
   disabled: PropTypes.bool,
   isActive: PropTypes.bool,
   onClick: PropTypes.func,
-  iconName: PropTypes.string,
   width: PropTypes.string,
 };
 
 Button.defaultProps = {
-  color: COLOR.primary,
-  size: SIZE.small,
+  color: Constant.COLOR.primary,
+  size: Constant.SIZE.small,
   onClick: null,
   disabled: false,
   rounded: false,
   isActive: false,
-  iconName: null,
 };
 
 function Button(props) {
@@ -50,56 +47,49 @@ function Button(props) {
   let paddingInLine;
   let fontSize;
   let lineHeight;
-  let iconMarginBottom;
 
   switch (props.size) {
-    case SIZE.xs:
+    case Constant.SIZE.xs:
       paddingBlock = 1;
       paddingInLine = 8;
       fontSize = 12;
-      iconMarginBottom = 0;
       lineHeight = 16;
       break;
-    case SIZE.small:
+    case Constant.SIZE.small:
       paddingBlock = 1;
       paddingInLine = 12;
       fontSize = 14;
-      iconMarginBottom = 0;
       lineHeight = 20;
       break;
-    case SIZE.medium:
+    case Constant.SIZE.medium:
       paddingBlock = 3;
       paddingInLine = 12;
       fontSize = 15;
-      iconMarginBottom = 0;
       lineHeight = 20;
       break;
-    case SIZE.large:
+    case Constant.SIZE.large:
       paddingBlock = 3;
       paddingInLine = 16;
       fontSize = 16;
-      iconMarginBottom = 0;
       lineHeight = 24;
       break;
-    case SIZE.xl:
+    case Constant.SIZE.xl:
       paddingBlock = 7;
       paddingInLine = 16;
       fontSize = 18;
-      iconMarginBottom = 0;
       lineHeight = 24;
       break;
-    case SIZE.xxl:
+    case Constant.SIZE.xxl:
       paddingBlock = 11;
       paddingInLine = 20;
       fontSize = 20;
-      iconMarginBottom = 0;
       lineHeight = 24;
       break;
     default:
   }
 
   return (
-    <BaseButton
+    <S.BaseButton
       onClick={!props.disabled && props.onClick}
       cursor={cursor}
       borderRadius={borderRadius}
@@ -114,18 +104,7 @@ function Button(props) {
       width={props.width}
     >
       {props.text}
-      {props.iconName ? (
-        <IconContainer marginBottom={`${iconMarginBottom}px`}>
-          <Icon
-            name={props.iconName}
-            size={props.size}
-            animationType={props.iconAnimationType}
-          ></Icon>
-        </IconContainer>
-      ) : (
-        <></>
-      )}
-    </BaseButton>
+    </S.BaseButton>
   );
 }
 

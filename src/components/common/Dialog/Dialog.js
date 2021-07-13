@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { BaseDialogContainer } from "./style";
+import * as S from "./style";
 import MaterialUiDialog from "@material-ui/core/Dialog";
 import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -63,9 +63,9 @@ function Dialog(props) {
         style: { backgroundColor: `${theme.colors.gray.gray100}cc` },
       }}
     >
-      <BaseDialogContainer width={DIALOG_WIDTH} height={DIALOG_HEIGHT}>
+      <S.BaseDialogContainer width={DIALOG_WIDTH} height={DIALOG_HEIGHT}>
         {props.children}
-      </BaseDialogContainer>
+      </S.BaseDialogContainer>
     </MaterialUiDialog>
   );
 }

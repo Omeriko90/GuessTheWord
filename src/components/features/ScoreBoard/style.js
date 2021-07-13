@@ -1,3 +1,4 @@
+import { DEVICE } from "constant";
 import styled from "styled-components";
 
 export const ScoreBoardContainer = styled.div`
@@ -35,6 +36,12 @@ export const ScoreBoardBodyContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+
+  @media ${DEVICE.small} {
+    max-height: 100px;
+  }
 `;
 
 export const ScoreBoardRowWrapper = styled.div`

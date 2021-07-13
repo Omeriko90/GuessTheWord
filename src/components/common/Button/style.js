@@ -17,6 +17,7 @@ export const BaseButton = styled.button`
   ${(props) => props.defaultStyle};
   cursor: ${(props) => props.cursor};
   outline: none;
+  width: ${(props) => (props.width ? props.width : "100%")};
 
   &:hover {
     ${(props) => props.hoverStyle}

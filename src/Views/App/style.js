@@ -8,6 +8,7 @@ export const Body = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   color: white;
+  background-position: center;
 `;
 
 export const ColorBackground = styled.div`

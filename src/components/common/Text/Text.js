@@ -1,18 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { BaseText } from "./style";
-import { SIZE } from "constant";
+import * as S from "./style";
+import * as Constant from "constant";
 
 Text.propTypes = {
   color: PropTypes.string,
   size: PropTypes.oneOf([
-    SIZE.xxs,
-    SIZE.xs,
-    SIZE.small,
-    SIZE.medium,
-    SIZE.large,
-    SIZE.xl,
-    SIZE.xxl,
+    Constant.SIZE.xxs,
+    Constant.SIZE.xs,
+    Constant.SIZE.small,
+    Constant.SIZE.medium,
+    Constant.SIZE.large,
+    Constant.SIZE.xl,
+    Constant.SIZE.xxl,
   ]),
   ellipsis: PropTypes.bool,
   bold: PropTypes.bool,
@@ -22,7 +22,7 @@ Text.propTypes = {
   withWordBreak: PropTypes.bool,
 };
 Text.defaultProps = {
-  size: SIZE.medium,
+  size: Constant.SIZE.medium,
   ellipsis: false,
   bold: false,
   preWrap: false,
@@ -44,33 +44,33 @@ function Text(props) {
   let lineHeight;
 
   switch (props.size) {
-    case SIZE.xxs:
+    case Constant.SIZE.xxs:
       fontSize = 12;
       lineHeight = 16;
       break;
-    case SIZE.xs:
+    case Constant.SIZE.xs:
       fontSize = 13;
       lineHeight = 17;
       break;
-    case SIZE.small:
+    case Constant.SIZE.small:
       fontSize = 14;
       lineHeight = 20;
       break;
-    case SIZE.medium:
+    case Constant.SIZE.medium:
       fontSize = 15;
       lineHeight = 20;
       break;
-    case SIZE.large:
+    case Constant.SIZE.large:
       fontSize = 20;
       lineHeight = 24;
       break;
-    case SIZE.xl:
+    case Constant.SIZE.xl:
       fontSize = 34;
-      lineHeight = 24;
+      lineHeight = 40;
       break;
-    case SIZE.xxl:
+    case Constant.SIZE.xxl:
       fontSize = 42;
-      lineHeight = 24;
+      lineHeight = 48;
       break;
     default:
       fontSize = 14;
@@ -78,7 +78,7 @@ function Text(props) {
   }
 
   return (
-    <BaseText
+    <S.BaseText
       fontSize={fontSize}
       color={props.color}
       fontFamily={fontFamily}
@@ -97,7 +97,7 @@ function Text(props) {
       lineClamp={props.lineClamp}
     >
       {props.children}
-    </BaseText>
+    </S.BaseText>
   );
 }
 
