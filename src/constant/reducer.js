@@ -1,6 +1,10 @@
 export const REDUCER_LABEL = {
-  getProjects: "PROJECT_GET",
-  setProject: "PROJECT_SET",
-  getUser: "USER_GET",
-  setUser: "USER_SET",
+  getScore: "SCORE_GET",
+  setScore: "SCORE_SET",
+  getResetScore: "RESET_SCORE_GET",
+  setResetScore: "RESET_SCORE_SET",
+  getWord: "WORD_GET",
+  setWord: "WORD_SET",
+  getScoreBoard: "SCORE_BOARD_GET",
+  setScoreBoard: "SCORE_BOARD_SET",
 };

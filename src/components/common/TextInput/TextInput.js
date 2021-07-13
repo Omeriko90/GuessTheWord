@@ -1,16 +1,24 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import PropTypes from "prop-types";
 import {
   BaseTextInput,
   InputContainer,
   TextIconGroup,
+  ErrorMsgContainer,
   InputComponentAndError,
 } from "./style";
-import { SIZE, TEXT_INPUT_TYPE } from "constant";
+import * as Constant from "constant";
+import Text from "../Text/Text";
+import { ThemeContext } from "helpers/context";
 
 TextInput.propTypes = {
   placeholder: PropTypes.string,
-  size: PropTypes.oneOf([SIZE.small, SIZE.medium, SIZE.large, SIZE.xl]),
+  size: PropTypes.oneOf([
+    Constant.SIZE.small,
+    Constant.SIZE.medium,
+    Constant.SIZE.large,
+    Constant.SIZE.xl,
+  ]),
   rounded: PropTypes.bool,
   disabled: PropTypes.bool,
   errorMsg: PropTypes.string,
@@ -24,7 +32,7 @@ TextInput.propTypes = {
   value: PropTypes.string,
   autoFocus: PropTypes.bool,
   withBorder: PropTypes.bool,
-  type: PropTypes.oneOf(Object.values(TEXT_INPUT_TYPE)),
+  type: PropTypes.oneOf(Object.values(Constant.TEXT_INPUT_TYPE)),
   name: PropTypes.string,
 };
 
@@ -34,12 +42,13 @@ TextInput.defaultProps = {
   rounded: false,
   lineHeight: true,
   autoFocus: false,
-  size: SIZE.small,
+  size: Constant.SIZE.small,
   withBorder: true,
-  type: TEXT_INPUT_TYPE.text,
+  type: Constant.TEXT_INPUT_TYPE.text,
 };
 
 function TextInput(props) {
+  const { colors } = useContext(ThemeContext);
   const textAlign = TEXT_ALIGN[getComputedStyle(document.body).direction];
   const [isFocused, setIsFocused] = useState(false);
   const borderRadius = props.rounded
@@ -64,22 +73,22 @@ function TextInput(props) {
   }, [baseInput.current, props.autoFocus]);
 
   switch (props.size) {
-    case SIZE.small:
+    case Constant.SIZE.small:
       fontSize = FONT_SIZE.small;
       lineHeight = LINE_HEIGHT.small;
       paddingStyle = "4px";
       break;
-    case SIZE.medium:
+    case Constant.SIZE.medium:
       fontSize = FONT_SIZE.medium;
       lineHeight = LINE_HEIGHT.medium;
       paddingStyle = "8px";
       break;
-    case SIZE.large:
+    case Constant.SIZE.large:
       fontSize = FONT_SIZE.large;
       lineHeight = LINE_HEIGHT.large;
       paddingStyle = "12px";
       break;
-    case SIZE.xl:
+    case Constant.SIZE.xl:
       fontSize = FONT_SIZE.xl;
       lineHeight = LINE_HEIGHT.xl;
       paddingStyle = "14px";
@@ -159,6 +168,15 @@ function TextInput(props) {
             type={props.type}
           ></BaseTextInput>
         </TextIconGroup>
+        {props.errorMsg && !props.disabled ? (
+          <ErrorMsgContainer>
+            <Text size={Constant.SIZE.xxs} color={colors.red.salmon}>
+              {props.errorMsg}
+            </Text>
+          </ErrorMsgContainer>
+        ) : (
+          <></>
+        )}
       </InputComponentAndError>
     </InputContainer>
   );

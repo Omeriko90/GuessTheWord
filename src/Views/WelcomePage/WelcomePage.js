@@ -5,10 +5,13 @@ import Text from "components/common/Text";
 import Button from "components/common/Button";
 import { LabelsContext } from "helpers/context";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getHighestScore } from "store/selectors/scoreBoard";
 
 function WelcomePage() {
   const { welcomePage } = useContext(LabelsContext);
   const history = useHistory();
+  const highestScore = useSelector(getHighestScore);
 
   const handleStartGameClick = () => {
     history.push("/game");
@@ -35,7 +38,7 @@ function WelcomePage() {
             {welcomePage.highestScore}
           </Text>
           <Text size={Constant.SIZE.xl} color={"white"}>
-            1000
+            {highestScore}
           </Text>
         </S.HighScoreContainer>
       </S.ContentContainer>

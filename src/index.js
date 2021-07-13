@@ -7,7 +7,7 @@ import { ConnectedRouter } from "connected-react-router";
 import configureStore, { history } from "store/store";
 import App from "Views/App";
 
-const initialState = { user: {}, projects: {} };
+const initialState = { scoreBoard: [], score: 0, words: [] };
 const store = configureStore(initialState);
 
 ReactDOM.render(

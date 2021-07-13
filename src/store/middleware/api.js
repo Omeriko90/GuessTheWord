@@ -1,26 +1,22 @@
 import axios from "axios";
 
-const apiMiddleware = ({ dispatch }) => (next) => (action) => {
-  next(action);
-  if (action.metaData?.api?.url) {
-    return handleApiAction(action, dispatch);
-  }
-};
+const apiMiddleware =
+  ({ dispatch }) =>
+  (next) =>
+  (action) => {
+    next(action);
+    if (action.metaData?.api?.url) {
+      return handleApiAction(action, dispatch);
+    }
+  };
 
 const handleApiAction = (action, dispatch) => {
   return apiRequest(action, dispatch);
 };
 
 const apiRequest = async (action, dispatch) => {
-  const {
-    url,
-    method,
-    data,
-    onSuccess,
-    onFailure,
-    label,
-    headers,
-  } = action.metaData.api;
+  const { url, method, data, onSuccess, onFailure, headers } =
+    action.metaData.api;
   initializeAxios();
   const timestamp = Date.now();
   try {

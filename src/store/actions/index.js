@@ -1,42 +1,43 @@
-import axios from "axios";
 import { REDUCER_LABEL as Labels } from "constant";
 
-const header = { berear: "" };
+const header = {
+  "X-Mashape-Key": "6b70371a15mshf1b8723bcfbc6f2p1e0349jsnc13003216116",
+  "Content-Type": "application/json",
+};
 
-export function logIn(username, password) {
-  const url = "https://private-052d6-testapi4528.apiary-mock.com/authenticate";
-  return new Promise((resolve, reject) => {
-    axios
-      .post(url, { username, password })
-      .then((response) => {
-        resolve(response.data[0]);
-      })
-      .catch((error) => {
-        apiErr(error);
-      });
-  });
-}
-
-export function setUser(user) {
-  return {
-    type: Labels.setUser,
-    payload: user,
-  };
-}
-
-export function getUserProjects(userToken) {
-  header.berear = userToken;
+export function getNewWord() {
   return apiAction({
-    url: `https://private-052d6-testapi4528.apiary-mock.com/info?`,
-    onSuccess: function (projects) {
+    url: `https://wordsapiv1.p.rapidapi.com/words/?random=true`,
+    onSuccess: function (word) {
       return {
-        type: Labels.setProject,
-        payload: projects,
+        type: Labels.setWord,
+        payload: word,
       };
     },
     onFailure: apiErr,
     headers: header,
   });
+}
+
+export function addPointsToScore(numberOfPoints) {
+  return {
+    type: Labels.setScore,
+    payload: numberOfPoints,
+  };
+}
+
+export function resetScore() {
+  return {
+    type: Labels.setResetScore,
+    payload: 0,
+  };
+}
+
+export function addScoreToScoreBoard(score) {
+  return {
+    type: Labels.setScoreBoard,
+    payload: score,
+  };
 }
 
 function apiErr(err, callback) {

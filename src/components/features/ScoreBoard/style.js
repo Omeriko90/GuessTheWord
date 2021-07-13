@@ -7,7 +7,7 @@ export const ScoreBoardContainer = styled.div`
   padding: 10px;
   border-radius: 10px;
   width: 100%;
-  max-width: 300px;
+  max-width: 340px;
 `;
 
 export const ScoreBoardHeaderContainer = styled.div`

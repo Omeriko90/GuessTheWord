@@ -1,15 +1,17 @@
 import { createBrowserHistory } from "history";
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import { connectRouter, routerMiddleware } from "connected-react-router";
-import user from "./reducers/user";
-import projects from "./reducers/projects";
+import score from "store/reducers/score";
+import scoreBoard from "store/reducers/scoreBoard";
+import words from "store/reducers/words";
 import apiMiddleware from "./middleware/api";
 
 export const history = createBrowserHistory();
 export default function configureStore(initialState) {
   const reducers = {
-    projects,
-    user,
+    score,
+    scoreBoard,
+    words,
   };
 
   const rootReducer = combineReducers({

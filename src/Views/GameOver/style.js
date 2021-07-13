@@ -38,6 +38,16 @@ export const ButtonContainer = styled.div`
   display: flex;
 `;
 
+export const ButtonsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > :not(:last-child) {
+    margin-bottom: 15px;
+  }
+`;
+
 export const HeadlineContainer = styled.div`
   display: flex;
   flex-direction: column;

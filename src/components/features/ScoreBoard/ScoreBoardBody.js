@@ -1,30 +1,30 @@
-import React, { useContext } from "react";
+import React from "react";
 import * as S from "./style";
-import * as Constant from "constant";
 import ScoreBoardItem from "./ScoreBoardItem";
-import { ThemeContext } from "helpers/context";
+import { useSelector } from "react-redux";
+import { selectScoreBoard } from "store/selectors";
+import NoDataMessage from "../NoDataMessage";
 
 function ScoreBoardBody() {
+  const scoreBoard = useSelector(selectScoreBoard);
+
   return (
     <S.ScoreBoardBodyContainer>
-      {temp.map((item) => {
-        return (
-          <S.ScoreBoardRowWrapper>
-            <ScoreBoardItem label={item.name} />
-            <ScoreBoardItem label={item.phoneNumber} />
-          </S.ScoreBoardRowWrapper>
-        );
-      })}
+      {scoreBoard?.length > 0 ? (
+        scoreBoard?.map((item, index) => {
+          return (
+            <S.ScoreBoardRowWrapper key={`score-${index}`}>
+              <ScoreBoardItem label={item.name} />
+              <ScoreBoardItem label={item.phoneNumber} />
+              <ScoreBoardItem label={item.score} />
+            </S.ScoreBoardRowWrapper>
+          );
+        })
+      ) : (
+        <NoDataMessage />
+      )}
     </S.ScoreBoardBodyContainer>
   );
 }
 
 export default ScoreBoardBody;
-
-const temp = [
-  { name: "omer", phoneNumber: "0544893629" },
-  { name: "omer", phoneNumber: "0544893629" },
-  { name: "omer", phoneNumber: "0544893629" },
-  { name: "omer", phoneNumber: "0544893629" },
-  { name: "omer", phoneNumber: "0544893629" },
-];

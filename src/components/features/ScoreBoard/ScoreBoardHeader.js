@@ -19,6 +19,11 @@ function ScoreBoardHeader() {
           {scoreBoard.phoneNumberColumn}
         </Text>
       </S.ScoreBoardHeaderColumnContainer>
+      <S.ScoreBoardHeaderColumnContainer>
+        <Text size={Constant.SIZE.medium} color={colors.gray.gray600}>
+          {scoreBoard.score}
+        </Text>
+      </S.ScoreBoardHeaderColumnContainer>
     </S.ScoreBoardHeaderContainer>
   );
 }

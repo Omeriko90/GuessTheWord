@@ -1,5 +1,8 @@
 const eng = () => {
   return {
+    global: {
+      noData: "No Data",
+    },
     welcomePage: {
       startGame: "Start Game",
       headline: "Welcome To Guess The Word Game!",
@@ -9,6 +12,8 @@ const eng = () => {
       guessButton: "Guess",
       inputPlaceholder: "Enter Your Guess",
       score: "Score:",
+      inputErr: "You didn't enter any guess",
+      wrongGuess: "Wrong guess. Please try again",
     },
     gameInstructions: {
       levels:
@@ -27,10 +32,16 @@ const eng = () => {
       phoneNumber: "Enter your phone number",
       scoreBoardHeadline: "Top Scores",
       submitButton: "Submit Score",
+      newGame: "New Game",
+      backToHome: "Home Page",
+      nameErr: "Name has to be at least 2 chars",
+      phoneNumberErr: "Phone Number is required",
+      onlyNumbersErr: "Invalid phone number",
     },
     scoreBoard: {
       nameColumn: "Name",
       phoneNumberColumn: "Phone Number",
+      score: "Score",
     },
   };
 };
