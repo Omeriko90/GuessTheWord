@@ -1,7 +1,7 @@
 import { REDUCER_LABEL as Labels } from "constant";
 
 const header = {
-  "X-Mashape-Key": "6b70371a15mshf1b8723bcfbc6f2p1e0349jsnc13003216116",
+  "X-Mashape-Key": "",
   "Content-Type": "application/json",
 };
 
